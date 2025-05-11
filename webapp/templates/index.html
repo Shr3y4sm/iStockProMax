@@ -23,6 +23,96 @@
     <header>
       <p>iStock</p>
     </header>
+    <div class="stock-ticker">
+      <div class="ticker-wrap">
+        <div class="ticker">
+          <div class="ticker-content">
+            <span class="ticker-item"
+              ><span class="symbol">AAPL</span><span class="price">$189.98</span
+              ><span class="change positive">▲ +1.23%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">TSLA</span><span class="price">$720.50</span
+              ><span class="change negative">▼ -2.15%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">GOOG</span><span class="price">$2,850</span
+              ><span class="change positive">▲ +0.87%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">AMZN</span><span class="price">$3,350</span
+              ><span class="change negative">▼ -0.45%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">MSFT</span><span class="price">$415</span
+              ><span class="change positive">▲ +0.92%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">META</span><span class="price">$485</span
+              ><span class="change negative">▼ -1.15%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">NVDA</span><span class="price">$890</span
+              ><span class="change positive">▲ +2.45%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">JPM</span><span class="price">$195</span
+              ><span class="change negative">▼ -0.75%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">V</span><span class="price">$275</span
+              ><span class="change positive">▲ +0.65%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">WMT</span><span class="price">$165</span
+              ><span class="change negative">▼ -0.35%</span></span
+            >
+          </div>
+          <div class="ticker-content">
+            <span class="ticker-item"
+              ><span class="symbol">AAPL</span><span class="price">$189.98</span
+              ><span class="change positive">▲ +1.23%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">TSLA</span><span class="price">$720.50</span
+              ><span class="change negative">▼ -2.15%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">GOOG</span><span class="price">$2,850</span
+              ><span class="change positive">▲ +0.87%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">AMZN</span><span class="price">$3,350</span
+              ><span class="change negative">▼ -0.45%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">MSFT</span><span class="price">$415</span
+              ><span class="change positive">▲ +0.92%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">META</span><span class="price">$485</span
+              ><span class="change negative">▼ -1.15%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">NVDA</span><span class="price">$890</span
+              ><span class="change positive">▲ +2.45%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">JPM</span><span class="price">$195</span
+              ><span class="change negative">▼ -0.75%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">V</span><span class="price">$275</span
+              ><span class="change positive">▲ +0.65%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">WMT</span><span class="price">$165</span
+              ><span class="change negative">▼ -0.35%</span></span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
     <section>
       <div class="info">
         <h1>Stock Price</h1>
@@ -35,11 +125,17 @@
       </div>
       <div class="price">
         <p>Previously closed price</p>
-        <p class="closed-price">{{ price_close }}</p>
+        <p class="closed-price">
+          {{ price_close if price_close is defined else '$0.00' }}
+        </p>
         <p class="change">Change</p>
-        <strong>{{ change_price }}</strong>
+        <strong
+          >{{ change_price if change_price is defined else '0.00%' }}</strong
+        >
         <p class="company">Company</p>
-        <p class="company-name">AAPL</p>
+        <p class="company-name">
+          {{ company_name if company_name is defined else 'AAPL' }}
+        </p>
       </div>
     </section>
     <form class="future" action="/results" method="POST">
@@ -92,7 +188,7 @@
               />
             </div>
           </div>
-          <button action="/results" type="submit">Predict</button>
+          <button type="submit">Predict</button>
         </div>
       </div>
     </form>

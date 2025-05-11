@@ -1,8 +1,8 @@
-:root{
+:root {
     color-scheme: light dark;
 }
 
-*{
+* {
     font-family: 'Poppins', sans-serif;
 }
 
@@ -10,13 +10,13 @@ html {
     box-sizing: border-box;
 }
 
-body{
+body {
     margin: 0;
-    background-color: light-dark(white,black);
+    background-color: light-dark(white, black);
 }
 
-nav{
-    background: linear-gradient(light-dark(rgba(255, 255, 255, 0.9), rgba(0, 0, 0, 0.8)) ,light-dark(rgba(255, 255, 255, 0.9), rgba(0, 0, 0, 0.6)));
+nav {
+    background: linear-gradient(light-dark(rgba(255, 255, 255, 0.9), rgba(0, 0, 0, 0.8)), light-dark(rgba(255, 255, 255, 0.9), rgba(0, 0, 0, 0.6)));
     padding: 1em 8em;
     width: 100%;
     font-size: 1.2rem;
@@ -25,7 +25,7 @@ nav{
     top: 0;
 }
 
-header{
+header {
     background: linear-gradient(light-dark(rgba(255, 255, 255, .1), rgba(0, 0, 0, 0.7)), light-dark(rgba(255, 255, 255, .1), rgba(0, 0, 0, 0.7))), url("https://images.unsplash.com/photo-1561740868-f9741f389203?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D") no-repeat center;
     background-size: cover;
     color: white;
@@ -37,49 +37,128 @@ header{
     font-weight: 500;
 }
 
-header p{
+header p {
     margin: 0;
     text-shadow: 0 0 1em light-dark(rgba(0, 0, 0, 1), none);
 }
 
-section{
+.stock-ticker {
+    background: #1a1a1a;
+    padding: 0.8em 0;
+    overflow: hidden;
+    position: relative;
+    border-bottom: 1px solid #2a2a2a;
+    margin-top: 3.5em;
+    width: 100%;
+}
+
+.ticker-wrap {
+    width: 100%;
+    overflow: hidden;
+    height: 2.5em;
+    background-color: #1a1a1a;
+    box-sizing: content-box;
+    position: relative;
+}
+
+.ticker {
+    display: flex;
+    white-space: nowrap;
+    animation: ticker 19.5s linear infinite;
+    position: absolute;
+    right: 0;
+}
+
+.ticker-content {
+    display: inline-flex;
+    white-space: nowrap;
+    padding-right: 50px;
+}
+
+.ticker:hover {
+    animation-play-state: paused;
+}
+
+.ticker-item {
+    display: inline-block;
+    padding: 0 2em;
+    font-size: 1.1em;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.ticker-item .symbol {
+    font-weight: 600;
+    margin-right: 0.5em;
+    color: #ffffff;
+}
+
+.ticker-item .price {
+    margin-right: 0.5em;
+    color: #ffffff;
+}
+
+.ticker-item .change {
+    padding: 0.2em 0.5em;
+    border-radius: 0.2em;
+    font-weight: 600;
+}
+
+.ticker-item .change.positive {
+    color: #00c853;
+}
+
+.ticker-item .change.negative {
+    color: #ff3d00;
+}
+
+@keyframes ticker {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+section {
     display: flex;
     padding: 2em 10em 0em 10em;
     justify-content: space-between;
     align-items: start;
-    
+
 }
 
-.info{
+.info {
     width: 70%;
 }
 
-.info h1{
+.info h1 {
     margin: 0 0 .5em 0;
     font-size: 4rem;
     font-weight: 400;
 }
 
-.info p{
+.info p {
     margin: 0 0 0 0;
     font-size: 1.4rem;
 }
 
-.price{
+.price {
     text-align: right;
 }
 
-.price p{
+.price p {
     font-size: 1.5rem;
     margin: 0em;
 }
 
-.price .change{
+.price .change {
     font-size: 1rem;
     margin-bottom: 0.5em;
 }
 
-.price strong{
+.price strong {
     background: #006613;
     padding: 0em .7em;
     font-size: 2.5rem;
@@ -88,51 +167,61 @@ section{
     color: white;
 }
 
-.price .closed-price{
+.price .closed-price {
     font-size: 3rem;
     margin: 0;
 }
 
-.price .company{
+.price .company {
     margin-top: .5em;
     font-size: 1rem;
 }
 
-.price .company-name{
+.price .company-name {
     font-size: 3rem;
 }
 
-.future{
+.future {
     padding: 0em 10em 1em 10em;
     display: flex;
     flex-direction: column;
 }
 
-.future h2{
+.tradingview-widget-container {
+    padding: 0 10em 2em 10em;
+    background-color: light-dark(white, #1a1a1a);
+}
+
+.tradingview-widget-container iframe {
+    border-radius: 0.5em;
+    box-shadow: 0 0 1em light-dark(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3));
+}
+
+.future h2 {
     font-weight: 500;
     margin: 1em 0 .5em 0;
 }
 
-.future-form{
+.future-form {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
-.input-data{
+.input-data {
     margin-bottom: 1em;
 }
 
-.future-input{
+.future-input {
     display: flex;
     justify-content: space-between;
 }
 
-.output strong{
+.output strong {
     font-weight: 300;
 }
 
-label{
+label {
     font-size: .9em;
     display: block;
     padding: 0 0 .2em .3em;
@@ -140,7 +229,7 @@ label{
     font-weight: 300;
 }
 
-input{
+input {
     border: none;
     border-radius: .2em;
     padding: .8em 1em;
@@ -148,26 +237,26 @@ input{
     width: 19em;
 }
 
-.future-form p{
+.future-form p {
     margin: 0;
 }
 
-.prediction{
+.prediction {
     display: flex;
     justify-content: space-between;
 }
 
-.prediction output{
+.prediction output {
     margin-left: 1em;
 }
 
-.prediction p{
+.prediction p {
     font-size: 3rem;
     margin: 0;
 }
 
-button{
-    background: linear-gradient(light-dark(rgb(39, 205, 255),#0fb8fb), light-dark(#00aade,#006ace));
+button {
+    background: linear-gradient(light-dark(rgb(39, 205, 255), #0fb8fb), light-dark(#00aade, #006ace));
     border: none;
     border-radius: .2em;
     font-size: 1.2rem;
@@ -178,152 +267,161 @@ button{
     /* width: 100%; */
 }
 
-button:hover{
-    background: linear-gradient(light-dark(rgb(39, 205, 255),#0fb8fb), light-dark(#00aade,#006ace));;
-    box-shadow: 0 0 1.5em light-dark(#7fdafe,#0099ff);
+button:hover {
+    background: linear-gradient(light-dark(rgb(39, 205, 255), #0fb8fb), light-dark(#00aade, #006ace));
+    ;
+    box-shadow: 0 0 1.5em light-dark(#7fdafe, #0099ff);
 }
 
-footer{
+footer {
     padding: 1em 12em;
     margin: 0;
-    background-color: light-dark(#eeeeee,#222222);
+    background-color: light-dark(#eeeeee, #222222);
     color: light-dark(#939393, #505050);
     font-size: .8rem;
     font-weight: 500;
 }
 
 @media (max-width: 1460px) {
-    input{
+    input {
         width: 100%;
     }
 }
 
 @media (max-width: 1210px) {
-    section, .future-input, .prediction{
+
+    section,
+    .future-input,
+    .prediction {
         display: flex;
         flex-direction: column;
     }
 
-    .info{
+    .info {
         margin-bottom: 1em;
     }
 
-    .info h1{
+    .info h1 {
         margin: 0;
     }
 
-    .info p{
+    .info p {
         font-size: 1rem;
     }
 
-    .price{
+    .price {
         text-align: left;
     }
 
-    .price strong{
+    .price strong {
         text-align: center;
     }
 
-    input{
+    input {
         width: 90%;
     }
 
-    .input1{
+    .input1 {
         margin-bottom: .7em;
     }
 
-    output{
+    output {
         width: 100%;
         margin-bottom: 1em;
         border-radius: .5em;
     }
-    .prediction{
+
+    .prediction {
         columns: 10em;
     }
 }
 
 @media (max-width: 940px) {
-    
-    .future, section, nav{
+
+    .future,
+    section,
+    nav {
         padding: 1em 4em;
     }
 
-    header{
+    header {
         padding: .5em .8em;
     }
-    
-    .info{
+
+    .info {
         margin-bottom: 1em;
     }
 
-    .info h1{
+    .info h1 {
         margin: 0;
     }
 
-    .info p{
+    .info p {
         font-size: 1rem;
     }
-    
-    input{
+
+    input {
         width: 90%;
     }
 
-    .input1{
+    .input1 {
         margin-bottom: .7em;
     }
 
-    footer{
+    footer {
         padding: 1em 4em;
     }
 
-    .future{
+    .future {
         padding-top: 0;
     }
 
-    .future h2{
+    .future h2 {
         margin: 0em 0 .2em 0;
     }
 }
 
 @media (max-width: 650px) {
 
-    .future, section, nav{
+    .future,
+    section,
+    nav {
         padding: 1em 2em;
     }
 
-    header{
+    header {
         padding: .5em .4em;
     }
 
-    .info{
+    .info {
         margin-bottom: 1em;
     }
 
-    .info h1{
+    .info h1 {
         margin: 0;
     }
-    
-    .info p{
+
+    .info p {
         font-size: 1rem;
     }
 
-    .future{
+    .future {
         padding-top: 0;
     }
 
-    .future h2{
+    .future h2 {
         margin: 0em 0 .2em 0;
     }
 
-    input{
+    input {
         width: 90%;
     }
 
-    .input1{
+    .input1 {
         margin-bottom: .5em;
     }
 
-    footer{
+    footer {
         padding: 1em 2em;
     }
 }
