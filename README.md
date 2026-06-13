@@ -1,26 +1,73 @@
 <h1>iStockProMax</h1>
 
-iStockProMax is a machine learning-driven stock market analysis and prediction platform. This project enables users to view current stock prices (currently only Apple), predict future prices based on historical trends. The tool is designed to cater to traders, analysts, and investors who want to make informed decisions using data-backed insights.
+iStockProMax is a Flask-based stock analysis project built to demonstrate a practical full-stack data workflow for interviews and recruiters. It combines live stock quote scraping, historical market data retrieval, and a machine learning prediction pipeline to show how a web app can move from user input to data processing to a visual result.
 
-<h2>Features</h2>
-Website design inspired by official Apple Investor Relations website.
+<h2>Project Overview</h2>
 
-<p>Live Stock Price Lookup:
-Fetches real-time stock prices using Selenium web scraping (currently only for Apple).</p>
+The app opens with a stock dashboard inspired by the Apple Investor Relations experience. It currently shows Apple’s live price and daily change, then lets a user enter a ticker, a historical date range, and a future date to generate a forecast. Behind the scenes, the app pulls data from YFinance, engineers stock features, trains a Random Forest Regressor, and returns a predicted price movement.
 
-<p>Future Stock Price Prediction**:
-Predicts stock prices for a user-specified future date using machine learning model Random Forest Regressor trained on historical stock data.
-Inputs: Company ticker symbol, range of historical data, future date.</p>
+<h2>What It Demonstrates</h2>
+
+- Flask routing and template rendering
+- Web scraping with Selenium for live quote data
+- Financial time-series handling with Pandas and YFinance
+- Machine learning with scikit-learn
+- A polished frontend with a stock-market style interface and TradingView chart embed
+
+<h2>Key Features</h2>
+
+- Live stock price lookup from Apple’s investor page
+- Historical stock data download for any supported ticker
+- Feature engineering using returns, moving averages, volatility, and volume change
+- Future price prediction with a Random Forest model
+- Simple visual output showing predicted price, percentage change, and movement direction
+
+<h2>Tech Stack</h2>
+
+- Backend: Flask, Python
+- Data: Pandas, NumPy, YFinance
+- ML: scikit-learn
+- Scraping: Selenium
+- Frontend: HTML, CSS, Jinja templates
+
+<h2>How It Works</h2>
+
+1. The homepage loads the current Apple price and daily change.
+2. The user enters a ticker symbol, a start year, an end year, and a target future date.
+3. The app downloads historical market data and builds technical features.
+4. A Random Forest Regressor is trained on the historical data.
+5. The app returns a predicted price, percentage movement, and an up/down signal.
+
+<h2>Setup</h2>
+
+Install the required packages:
+
+```bash
+pip install -r webapp/requirements.txt
+```
+
+Run the app from the webapp folder:
+
+```bash
+python app.py
+```
+
+<h2>Notes</h2>
+
+- The live quote scraping currently targets Apple only.
+- Selenium requires a working Chrome browser and compatible driver setup.
+- This project is intended for educational and interview showcase purposes, not real trading decisions.
 
 <h2>Screenshots</h2>
+
 <h3>Homepage</h3>
 
 ![Screenshot 2024-12-22 183029](https://github.com/user-attachments/assets/93251d76-88b2-49b9-938d-a5742aa16cc9)
-
 
 <h3>Prediction Page</h3>
 
 ![Screenshot 2024-12-22 183145](https://github.com/user-attachments/assets/4ba78e13-0d65-427f-ab8c-0a62b6bdb0c5)
 
-<h3>**Disclaimer</h3>
-iStockProMax is a platform designed for educational and informational purposes only. The predictions, data, and analyses provided by the tool are based on historical data and machine learning models, and they are not guaranteed to be accurate or reliable.
+<h2>Disclaimer</h2>
+
+iStockProMax is for educational and informational use only. The predictions are based on historical data and a machine learning model, so they are not guaranteed to be accurate or suitable for trading.
