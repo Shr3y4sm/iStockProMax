@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>iStock</title>
+    <link rel="stylesheet" href="/static/css/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <nav>Stocle</nav>
+    <header>
+      <p>iStock</p>
+    </header>
+    <div class="stock-ticker">
+      <div class="ticker-wrap">
+        <div class="ticker">
+          <div class="ticker-content">
+            <span class="ticker-item"
+              ><span class="symbol">AAPL</span><span class="price">$189.98</span
+              ><span class="change positive">▲ +1.23%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">TSLA</span><span class="price">$720.50</span
+              ><span class="change negative">▼ -2.15%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">GOOG</span><span class="price">$2,850</span
+              ><span class="change positive">▲ +0.87%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">AMZN</span><span class="price">$3,350</span
+              ><span class="change negative">▼ -0.45%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">MSFT</span><span class="price">$415</span
+              ><span class="change positive">▲ +0.92%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">META</span><span class="price">$485</span
+              ><span class="change negative">▼ -1.15%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">NVDA</span><span class="price">$890</span
+              ><span class="change positive">▲ +2.45%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">JPM</span><span class="price">$195</span
+              ><span class="change negative">▼ -0.75%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">V</span><span class="price">$275</span
+              ><span class="change positive">▲ +0.65%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">WMT</span><span class="price">$165</span
+              ><span class="change negative">▼ -0.35%</span></span
+            >
+          </div>
+          <div class="ticker-content">
+            <span class="ticker-item"
+              ><span class="symbol">AAPL</span><span class="price">$189.98</span
+              ><span class="change positive">▲ +1.23%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">TSLA</span><span class="price">$720.50</span
+              ><span class="change negative">▼ -2.15%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">GOOG</span><span class="price">$2,850</span
+              ><span class="change positive">▲ +0.87%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">AMZN</span><span class="price">$3,350</span
+              ><span class="change negative">▼ -0.45%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">MSFT</span><span class="price">$415</span
+              ><span class="change positive">▲ +0.92%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">META</span><span class="price">$485</span
+              ><span class="change negative">▼ -1.15%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">NVDA</span><span class="price">$890</span
+              ><span class="change positive">▲ +2.45%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">JPM</span><span class="price">$195</span
+              ><span class="change negative">▼ -0.75%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">V</span><span class="price">$275</span
+              ><span class="change positive">▲ +0.65%</span></span
+            >
+            <span class="ticker-item"
+              ><span class="symbol">WMT</span><span class="price">$165</span
+              ><span class="change negative">▼ -0.35%</span></span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <section>
+      <div class="info">
+        <h1>Stock Price</h1>
+        <p>
+          The stock information provided is for informational purposes only and
+          is not intended for trading purposes. The stock information is
+          provided by YFinance, a third party service, and Stocle does not
+          provide information to this service.
+        </p>
+      </div>
+      <div class="price">
+        <p>Previously closed price</p>
+        <p class="closed-price">
+          {{ price_close if price_close is defined else '$0.00' }}
+        </p>
+        <p class="change">Change</p>
+        <strong
+          >{{ change_price if change_price is defined else '0.00%' }}</strong
+        >
+        <p class="company">Company</p>
+        <p class="company-name">
+          {{ company_name if company_name is defined else 'AAPL' }}
+        </p>
+      </div>
+    </section>
+    <form class="future" action="/results" method="POST">
+      <h2>Future Stock Price Lookup</h2>
+      <div class="future-form">
+        <div class="input-data">
+          <div class="future-input">
+            <!-- Company Name Input -->
+            <div class="input1">
+              <label for="company_name">Company Ticker </label>
+              <input
+                type="text"
+                id="company_name"
+                name="company_name"
+                placeholder="e.g., AAPL, TSLA"
+                required
+              />
+            </div>
+            <!-- Date Range Inputs -->
+            <div class="input1">
+              <label for="start_year">Start Year </label>
+              <input
+                type="text"
+                id="start_year"
+                name="start_year"
+                placeholder="e.g., 2020"
+                required
+              />
+            </div>
+
+            <div class="input1">
+              <label for="end_year">End Year </label>
+              <input
+                type="text"
+                id="end_year"
+                name="end_year"
+                placeholder="e.g., 2023"
+                required
+              />
+            </div>
+            <!-- Future Prediction Date -->
+            <div class="input1">
+              <label for="future_date">Predict for Future Date </label>
+              <input
+                type="text"
+                id="future_date"
+                name="future_date"
+                placeholder="dd-mm-yyyy"
+                required
+              />
+            </div>
+          </div>
+          <button type="submit">Predict</button>
+        </div>
+      </div>
+    </form>
+    <footer>&copy; Stocle</footer>
+  </body>
+</html>
