@@ -8,14 +8,30 @@ from sklearn.model_selection import train_test_split
 app = Flask(__name__, template_folder="templates", static_folder="static")
 
 
+def to_scalar(value):
+    if isinstance(value, pd.DataFrame):
+        value = value.iloc[0, 0]
+    elif isinstance(value, pd.Series):
+        value = value.iloc[0]
+
+    if hasattr(value, "item"):
+        try:
+            return value.item()
+        except Exception:
+            return value
+
+    return value
+
+
 def get_latest_quote(symbol="AAPL"):
     try:
         history = yf.Ticker(symbol).history(period="5d", interval="1d")
         if history.empty:
             return "N/A", "N/A"
 
-        latest_close = float(history["Close"].iloc[-1])
-        previous_close = float(history["Close"].iloc[-2]) if len(history) > 1 else latest_close
+        close_history = history["Close"]
+        latest_close = float(to_scalar(close_history.iloc[-1]))
+        previous_close = float(to_scalar(close_history.iloc[-2])) if len(close_history) > 1 else latest_close
         change_percent = ((latest_close - previous_close) / previous_close * 100) if previous_close else 0
         sign = "+" if change_percent >= 0 else ""
         return f"${latest_close:,.2f}", f"{sign}{change_percent:.2f}%"
@@ -85,7 +101,8 @@ def predict_stock_movement(stock_data, model, input_date, features, company_name
             features_data = last_row[features].values.reshape(1, -1)
             predicted_price = model.predict(features_data)[0]
 
-        last_price = stock_data['Close'].iloc[-1]
+        last_price = float(to_scalar(stock_data['Close'].iloc[-1]))
+        predicted_price = float(to_scalar(predicted_price))
         percentage_change = float(((predicted_price - last_price) / last_price) * 100)
         movement = "Up" if percentage_change > 0 else "Down"
         
