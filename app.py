@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import pandas as pd
 import yfinance as yf
 from sklearn.ensemble import RandomForestRegressor
@@ -38,17 +38,26 @@ def get_latest_quote(symbol="AAPL"):
     except Exception:
         return "N/A", "N/A"
 
+
 @app.route('/')
 def index():
-    price_close, change_price = get_latest_quote("AAPL")
-    return render_template('index.html', price_close=price_close, change_price=change_price)
+    # price_close, change_price = get_latest_quote("AAPL")
+    return render_template('index.html')
 
-@app.route('/results', methods=['POST'])
+
+@app.route('/results', methods=['GET','POST'])
 def results():
-    company_name = request.form['company_name']
-    start_year = request.form['start_year']
-    end_year = request.form['end_year']
-    future_date = request.form['future_date']
+    data = request.get_json(force=True)
+    if not data:
+        return jsonify({"error": "Invalid JSON body"}), 400
+
+    company_name = data.get('company_name')
+    start_year = data.get('start_year')
+    end_year = data.get('end_year')
+    future_date = data.get('future_date')
+
+    if not all([company_name, start_year, end_year, future_date]):
+        return jsonify({"error": "Missing required fields"}), 400
 
     start_date = f"{start_year}-01-01"
     end_date = f"{end_year}-12-31"
@@ -56,11 +65,17 @@ def results():
     price_close, change_price = get_latest_quote("AAPL")
 
     try:
+        ticker = yf.Ticker(company_name)
+        company_fullname = ticker.info.get("longName", company_name.upper())
+    except Exception:
+        company_fullname = company_name.upper()
+
+    try:
         stock_data = yf.download(company_name, start=start_date, end=end_date)
         if stock_data.empty:
             raise ValueError(f"No data found for {company_name}. Check the ticker.")
     except Exception as e:
-        return render_template('results.html', result={
+        return jsonify({
             "error": str(e),
             "price_close": price_close,
             "change_price": change_price,
@@ -77,7 +92,8 @@ def results():
     stock_data['Future Price'] = stock_data['Close'].shift(-1)
     stock_data.dropna(inplace=True)
 
-    features = ['Close', 'Volume', '5 Day Moving Avg', '10 Day Moving Avg', '20 Day Moving Avg', 'Volatility', 'Volume Change']
+    features = ['Close', 'Volume', '5 Day Moving Avg', '10 Day Moving Avg', '20 Day Moving Avg', 'Volatility',
+                'Volume Change']
     X = stock_data[features]
     y = stock_data['Future Price']
 
@@ -86,7 +102,12 @@ def results():
     model.fit(X_train, y_train)
 
     result = predict_stock_movement(stock_data, model, future_date, features, company_name, price_close, change_price)
-    return render_template('results.html', result=result)
+
+    if isinstance(result, dict):
+        result['company_fullname'] = company_fullname
+
+    return jsonify(result)
+
 
 def predict_stock_movement(stock_data, model, input_date, features, company_name, price_close, change_price):
     try:
@@ -105,7 +126,7 @@ def predict_stock_movement(stock_data, model, input_date, features, company_name
         predicted_price = float(to_scalar(predicted_price))
         percentage_change = float(((predicted_price - last_price) / last_price) * 100)
         movement = "Up" if percentage_change > 0 else "Down"
-        
+
         return {
             "company_name": company_name.upper(),
             "future_date": input_date,
@@ -122,6 +143,7 @@ def predict_stock_movement(stock_data, model, input_date, features, company_name
             "price_close": price_close,
             "change_price": change_price
         }
+
 
 if __name__ == '__main__':
     app.run(debug=True)
